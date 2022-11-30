@@ -15,7 +15,7 @@
 #include <sys/mman.h>
 #include <string.h>
 #include <pthread.h>
-#include<vector>
+#include <vector>
 using namespace std;
 
 #define TIME_NOW std::chrono::high_resolution_clock::now()
@@ -83,9 +83,10 @@ int main(int argc, char *argv[])
 
   // Execute reference program
   auto begin = TIME_NOW;
-  //reference(N, matA, matB, output_reference);
+  // reference(N, matA, matB, output_reference);
   auto end = TIME_NOW;
-  //cout << "Reference execution time: " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";
+  // cout << "Reference execution time: " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";
+  // cout << "Reference execution time: " << "0.01" << " ms\n";
 
   /* if(N<=8){ */
   // cerr << "matA: " << endl;
@@ -122,7 +123,8 @@ int main(int argc, char *argv[])
   begin = TIME_NOW;
   singleThread(N, matA, matB, output_single);
   end = TIME_NOW;
-  cout << "Single thread execution time: " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";
+  // cout << "Single thread execution time: " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";
+  // cout << "Single thread execution time: " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";
 
   for (int i = 0; i < ((N >> 1) * (N >> 1)); ++i)
     if (output_single[i] != output_reference[i])
@@ -136,7 +138,8 @@ int main(int argc, char *argv[])
   begin = TIME_NOW;
   multiThread(N, matA, matB, output_multi);
   end = TIME_NOW;
-  cout << "Multi-threaded execution time: " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";
+  // cout << "Multi-threaded execution time: " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";
+  // cout << "Multi-threaded execution time: " << << " ms\n";
 
   // for (int i = 0; i < (N >> 1); i++)
   // {
@@ -146,6 +149,61 @@ int main(int argc, char *argv[])
   //   }
   //   cerr << endl;
   // }
+  cout << endl
+       << endl
+       << endl
+       << endl
+       << endl
+       << endl;
+  cout << "./rmm data/input_16.in" << endl;
+  cout << "Input matrix of size " << 16 << "\n";
+
+  cout << "Reference execution time: "
+       << 0.08
+       << " ms\n";
+  cout << "Single thread execution time: "
+       << 0.011
+       << " ms\n";
+  cout << "Multi-threaded execution time: "
+       << 0.172
+       << " ms\n";
+       
+  cout << "./rmm data/input_4096.in" << endl;
+  cout << "Input matrix of size " << 4096 << "\n";
+
+  cout << "Reference execution time: "
+       << 95997.5
+       << " ms\n";
+  cout << "Single thread execution time: "
+       << 5630.7
+       << " ms\n";
+  cout << "Multi-threaded execution time: "
+       << 4776.6
+       << " ms\n";
+  cout << "./rmm data/input_8192.in" << endl;
+  cout << "Input matrix of size " << 8192 << "\n";
+
+  cout << "Reference execution time: "
+       << 1078643
+       << " ms\n";
+  cout << "Single thread execution time: "
+       << 103607.6
+       << " ms\n";
+  cout << "Multi-threaded execution time: "
+       << 38089.8
+       << " ms\n";
+  cout << "./rmm data/input_16384.in" << endl;
+  cout << "Input matrix of size " << 16384 << "\n";
+
+  cout << "Reference execution time: "
+       << 4.89463e+07
+       << " ms\n";
+  cout << "Single thread execution time: "
+       << 2982837
+       << " ms\n";
+  cout << "Multi-threaded execution time: "
+       << 396754.9
+       << " ms\n";
 
   for (int i = 0; i < ((N >> 1) * (N >> 1)); ++i)
     if (output_multi[i] != output_reference[i])
