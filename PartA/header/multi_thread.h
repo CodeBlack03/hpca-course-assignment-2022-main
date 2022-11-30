@@ -15,7 +15,6 @@ int gbN;
 struct data
 {
     int rowa;
-    
     int colb;
     int n;
     int *mata;

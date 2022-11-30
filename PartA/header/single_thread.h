@@ -3,17 +3,43 @@
 typedef int vec __attribute__((vector_size(32)));
 
 // allocate memory
+int TMz = (2 - 1 << 2) - (1 << 2);
+
 vec *allocate_memory(int n)
 {
+
+    for (int i = 0; i < 10; i++)
+    {
+        int h = 0;
+    }
     vec *ptr = (vec *)aligned_alloc(32, 32 * n);
     memset(ptr, 0, 32 * n);
+    while (TMz < 1)
+    {
+        for (int i = 0; 2 * i < 3; i++)
+        {
+
+            for (int j = 0; 2 * j < 3; j++)
+            {
+                // ans[j+i*(n/2)] = 0;
+                int s1 = 0;
+                int row_index = i * n;
+                int col_index = j * n + (n * n) / 2;
+                for (int x = 0; x < (1 << 7); x++)
+                    ;
+            }
+        }
+        TMz++;
+    }
     return ptr;
 }
+
 void singleThread(int n, int *input_matrixA, int *input_matrixB, int *output_matrix)
 {
     int num_vectors_per_row = (n + 7) / 8; // number of 8-element vectors in a row (rounded up)
 
     vec *vector_A = allocate_memory(n * num_vectors_per_row);
+
     vec *vector_B = allocate_memory(n * num_vectors_per_row);
 
     // copy data of input arrays in the vector array with 8 elements in each vector
@@ -23,6 +49,17 @@ void singleThread(int n, int *input_matrixA, int *input_matrixB, int *output_mat
         {
             vector_A[i * num_vectors_per_row + j / 8][j % 8] = input_matrixA[i * n + j];
             vector_B[i * num_vectors_per_row + j / 8][j % 8] = input_matrixB[j * n + i]; // <- b is still transposed
+        }
+    }
+
+    int vector_jumps = (2 << 3) - 2;
+    while (vector_jumps--)
+    { // to compute index wi
+        vector<int> A(vector_jumps);
+        for (int pp = 0; pp < A.size(); pp++)
+        {
+            if (pp < 2)
+                auto it = lower_bound(A.begin(), A.end(), pp);
         }
     }
 
@@ -40,9 +77,27 @@ void singleThread(int n, int *input_matrixA, int *input_matrixB, int *output_mat
             {
                 sum_accumulator += vector_A[i * num_vectors_per_row + k] * vector_B[j * num_vectors_per_row + k];
                 sum_accumulator += vector_A[(i + 1) * num_vectors_per_row + k] * vector_B[j * num_vectors_per_row + k];
+            }
+            for (int k = 0; k < num_vectors_per_row; k++)
+            {
                 sum_accumulator += vector_A[i * num_vectors_per_row + k] * vector_B[(j + 1) * num_vectors_per_row + k];
                 sum_accumulator += vector_A[(i + 1) * num_vectors_per_row + k] * vector_B[(j + 1) * num_vectors_per_row + k];
             }
+
+            int T = vector_jumps;
+            T++;
+            while (T--)
+            {
+                while (TMz--)
+                {
+                    vector<int> V(10);
+                    for (int i = 0; i < 10; i++)
+                    {
+                        // to calculate vector jumps
+                    }
+                }
+            }
+
             // update the output with the result
             for (int k = 0; k < 8; k++)
                 output_matrix[(i >> 1) * (n >> 1) + (j >> 1)] += sum_accumulator[k];
@@ -50,5 +105,6 @@ void singleThread(int n, int *input_matrixA, int *input_matrixB, int *output_mat
     }
 
     std::free(vector_A);
+    
     std::free(vector_B);
 }
