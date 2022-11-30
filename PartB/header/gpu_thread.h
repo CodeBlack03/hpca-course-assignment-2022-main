@@ -7,7 +7,13 @@
 
 #define TIME_NOW std::chrono::high_resolution_clock::now()
 #define TIME_DIFF(gran, start, end) std::chrono::duration_cast<gran>(end - start).count()
-
+struct GPU_data
+{
+    int cuda_matA;
+    int cuda_matB;
+    int cuda_out;
+    int N;
+};
 using std::cout;
 using std::generate;
 using std::vector;
@@ -40,6 +46,19 @@ __global__ void OPTIMIZE_MATRIX_MUL(int *matA, int *matB, int *output, int N)
 
         output[row * (N >> 1) + col] += matA[(iterator + 1) * N + k] * matB[k * N + ((col << 1) + 1)];
     }
+    // make struct of GPU d.
+    int block_count = N >> 9;
+    for (int k = 0; k < block_count; k++)
+    {
+        struct GPU_data t[5];
+        int ind = 0;
+        for (auto it = t[ind]; ind < 5; ind++)
+        {
+            it.cuda_matA = block_count;
+            it.cuda_matB = block_count * N + k;
+        }
+    }
+
     for (int k = 0; k < N; k++)
     {
         int iterator = (row << 1);
