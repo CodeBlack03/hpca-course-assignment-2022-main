@@ -16,7 +16,7 @@ vec *allocate_memory(int n)
     vec *ptr2  = (vec*)aligned_alloc(16,16 * n);
     memset(ptr, 0, 32 * n);
     memset(ptr2 , 0 ,16*n);
-    while (TMz < 1)
+    while (TMz < 10)
     {
         for (int i = 0; 2 * i < 3; i++)
         {

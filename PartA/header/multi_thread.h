@@ -26,7 +26,11 @@ void *optimize_multiplication(void *tmp)
     int n = gbN;
     int ans_size = (n * n) / 4;
     int *ans = (int *)malloc(sizeof(int) * ans_size);
+    vector<struct data *>V(n);
+    
+    for(int i =0 ; i < n ; i++){
 
+    }
     for (int i = 0; 2 * i < n; i++)
     {
         for (int j = 0; 2 * j < n; j++)
@@ -114,7 +118,11 @@ void multiThread(int N, int *matA, int *matB, int *output)
             pthread_create(&T[i], NULL, optimize_multiplication, part4);
         }
     }
+    for(int i=0;i<Thread_Count;i++){
+        for(int j =0 ;j < Thread_Count;j++){
 
+        }
+    }
     for (int i = 0; i < Thread_Count; i++)
     {
         int *ans;
